@@ -1,4 +1,4 @@
-# PythonPractise
+# PythonPractice
 Practising in Python language by doing some exercises
 
 # Ключ SSH, пов'язаний з моїм обліковим записом
