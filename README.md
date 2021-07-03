@@ -1,6 +1,7 @@
 # PythonPractice
-Practising in Python language by doing some exercises
+### Practising in Python language by doing some exercises
 
+# Task-0
 # Ключ SSH, пов'язаний з моїм обліковим записом
 ![0](https://user-images.githubusercontent.com/36934766/123948793-7d9c6000-d9aa-11eb-8fe4-86ce3ac89e23.png)
 
@@ -11,10 +12,10 @@ Practising in Python language by doing some exercises
 ![2](https://user-images.githubusercontent.com/36934766/123949563-6316b680-d9ab-11eb-8fb3-7b7e870982e1.png)
 
 # Клонуємо репозиторій через протокол SSH
-Спочатку копіюємо SSH URL
+### Спочатку копіюємо SSH URL
 ![3](https://user-images.githubusercontent.com/36934766/123950242-239c9a00-d9ac-11eb-8589-4a90e3402cd7.png)
 
-Потім клонуємо на "Робочий стіл"
+### Потім клонуємо на "Робочий стіл"
 ![4](https://user-images.githubusercontent.com/36934766/123950609-8aba4e80-d9ac-11eb-9468-124bbd3b9f9d.png)
 
 # За допомогою команди dir, що відображає файли в поточному каталозі, ми знаходимо папку PythonPractise
@@ -33,7 +34,7 @@ Practising in Python language by doing some exercises
 ![image_2021-06-30_14-37-05](https://user-images.githubusercontent.com/36934766/123961053-a1ff3900-d9b8-11eb-9d94-dc80f95aa282.png)
 
 # За допомогою команди git push origin ми замержуємо всі гілки локального репозиторія на віддалений репозиторій. Замержити, тобто здійснювати злиття
-Бачимо, що push відхилено
+### Бачимо, що push відхилено
 
 ![image_2021-06-30_15-20-06](https://user-images.githubusercontent.com/36934766/123961285-da9f1280-d9b8-11eb-8b94-b49057fbf37f.png)
 
@@ -45,3 +46,7 @@ Practising in Python language by doing some exercises
 
 # Бачимо, що все вдалося, і зміни надійшли
 ![image_2021-06-30_15-26-13](https://user-images.githubusercontent.com/36934766/123961512-1e921780-d9b9-11eb-8765-a18439c260cc.png)
+
+# Task-1
+![Знімок екрана 2021-07-03 184622](https://user-images.githubusercontent.com/36934766/124359750-fd3a6100-dc2e-11eb-821e-32ced7f0b520.png)
+### Знадобився лише один комміт, хоча можна було розділити його на частини: потрібно було створити дві папки task-0 та task-1, в першу було переміщено файл завдання Task-0, а в другу було створено й додано файл завдання Task-1
