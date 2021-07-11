@@ -244,7 +244,7 @@ class Calc():
         self.current = math.cos(math.radians(float(txtDisplay.get())))/math.sin(math.radians(float(txtDisplay.get())))
         self.display(self.current)
 
-    def log(self):
+    def ln(self):
         self.result = False
         self.current = math.log(float(txtDisplay.get()))
         self.display(self.current)
@@ -362,12 +362,12 @@ btnctg.bind("<Enter>", button_hover13)
 btnctg.bind("<Leave>", button_hover_leave13)
 
 # Рядок 2:
-btnlog = Button(calc, text="log",width=6, height=2, bg='#F0F0F0', activebackground='#B2AEB5', fg='black', font=('Helvetica',20,'bold'), bd=1, relief="groove", command=added_value.log)
+btnlog = Button(calc, text="log",width=6, height=2, bg='#F0F0F0', activebackground='#B2AEB5', fg='black', font=('Helvetica',20,'bold'), bd=1, relief="groove", command=added_value.log10)
 btnlog.grid(row=2, column= 4, pady = 1)
 btnlog.bind("<Enter>", button_hover14)
 btnlog.bind("<Leave>", button_hover_leave14)
 
-btnln = Button(calc, text="ln", width=6, height=2, bg='#F0F0F0', activebackground='#B2AEB5', fg='black', font=('Helvetica',20,'bold'), bd=1, relief="groove", command=added_value.log10)
+btnln = Button(calc, text="ln", width=6, height=2, bg='#F0F0F0', activebackground='#B2AEB5', fg='black', font=('Helvetica',20,'bold'), bd=1, relief="groove", command=added_value.ln)
 btnln.grid(row=2, column= 5, pady = 1)
 btnln.bind("<Enter>", button_hover15)
 btnln.bind("<Leave>", button_hover_leave15)
