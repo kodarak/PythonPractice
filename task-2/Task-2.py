@@ -12,22 +12,24 @@ root = Tk() #створює вікно для програми
 root['bg'] = '#E6E6E6' #встановлює колір задньої частини програми
 root.title('Калькулятор') #встановлює назву програми
 root.wm_attributes('-alpha', 0.95) #встановлює прозорість програми
-root.geometry('482x568+450+90') #встановлює розміри вікна програми
+root.geometry('482x568+450+90') #встановлює розміри вікна програми, що буде зміщено від верхньої лівої точки екрану на 450 пікселів вправо і на 90 пікселів вниз
 
 root.resizable(height=False, width=False) #робить так, що користувач не може змінювати розміри вікна програми для кращого користувацького інтерфейсу, бо присутнє значення False; також можна використати (0,0)
 
 calc = Frame(root)
-calc.grid() #табличний спосіб розміщення
+calc.grid() #двовимірний табличний спосіб розміщення(кожна "комірка" в отриманій таблиці може містити віджет)
 
 # ****************************************************************************************************** #
 
 # Визначаємо hover для різних кнопок
 
-def button_hover(smth): #для того, щоб змінювався колір тоді, коли наводимо на кнопку
+def button_hover(smth): #для того, щоб змінювався колір тоді, коли наводимо на кнопку(спочатку потрібно викликати функцію)
     btnClearEntry["bg"] = "#D7D7D7"
 
-def button_hover_leave(smth): #для того, щоб після прибирання курсора колір кнопки змінювався на заданий
+def button_hover_leave(smth): #для того, щоб після прибирання курсора колір кнопки змінювався на заданий(спочатку потрібно викликати функцію)
     btnClearEntry["bg"] = "SystemButtonFace"
+    
+# Для кожної кнопки :
 
 def button_hover1(smth):
     btnClearAll["bg"] = "#D7D7D7"
@@ -224,32 +226,32 @@ class Calc():
             #!self.current = bitstring.BitArray(float(txtDisplay.get()), length=None)
             self.display(self.current)
 
-    def cos(self):
+    def cos(self): #визначається функція для косинуса(обчислення проводяться за допомогою функцій сos та radians(який перетворює кут txtDisplay, значення, яке ми отримуємо з дисплея, з градусів у радіани) з модуля math)
         self.result = False
         self.current = math.cos(math.radians(float(txtDisplay.get())))
         self.display(self.current)
 
-    def sin(self):
+    def sin(self): #визначається функція для синуса(обчислення проводяться за допомогою функції sin та radians з модуля math)
         self.result = False
         self.current = math.sin(math.radians(float(txtDisplay.get())))
         self.display(self.current)
 
-    def tan(self):
+    def tan(self): #визначається функція для тангенса(обчислення проводяться за допомогою функції tan та radians з модуля math)
         self.result = False
         self.current = math.tan(math.radians(float(txtDisplay.get())))
         self.display(self.current)
     
-    def ctg(self):
+    def ctg(self): #визначається функція для котангенса(обчислення проводяться за допомогою функцій cos та sin(щоб отримати котангенс, то(з тригонометричних формул) потрібно cos(x) поділити на sin(x)) з модуля math)
         self.result = False
         self.current = math.cos(math.radians(float(txtDisplay.get())))/math.sin(math.radians(float(txtDisplay.get())))
         self.display(self.current)
 
-    def ln(self):
+    def ln(self): #визначається функція для натурального логарифма(обчислення проводяться за допомогою функції log з модуля math)
         self.result = False
         self.current = math.log(float(txtDisplay.get()))
         self.display(self.current)
 
-    def log10(self):
+    def log10(self): #визначається функція для десяткового логарифма(обчислення проводяться за допомогою функції log10 з модуля math)
         self.result = False
         self.current = math.log10(float(txtDisplay.get()))
         self.display(self.current)
@@ -258,15 +260,15 @@ added_value = Calc()
 
 # ****************************************************************************************************** #
 
-# Дисплей для калькулятора
+# Дисплей для калькулятора :
 
-txtDisplay = Entry(calc, font=('Helvetica', 20, 'bold'), bg='#E6E6E6', fg='black', bd=30, relief="flat", width=28, justify=RIGHT)
-txtDisplay.grid(row=0, column=0, columnspan=4, pady=1)
+txtDisplay = Entry(calc, font=('Helvetica', 20, 'bold'), bg='#E6E6E6', fg='black', bd=30, relief="flat", width=28, justify=RIGHT) #віджет "Entry" використовується для прийняття однорядкових текстових рядків від користувача
+txtDisplay.grid(row=0, column=0, columnspan=4, pady=1) #розташування віджета з охопленням(columnspan)
 txtDisplay.insert(0,"0") #відразу вставити в рядок дисплея число 0
 
 # ****************************************************************************************************** #
 
-# Цифрова клавіатура для калькулятора 
+# Цифрова клавіатура для калькулятора :
 
 numbers = "789456123"
 i=0
@@ -274,18 +276,20 @@ btn = []
 for j in range(2,5):
     for k in range(3):
         btn.append(Button(calc, width=6, height=2, bg='#FAFAFA', activebackground='#B2AEB5', fg='black', font=('Helvetica',20,'bold'), bd=1, relief="raised", text=numbers[i]))
-        btn[i].grid(row=j, column= k, pady = 1)
+        btn[i].grid(row=j, column=k, pady=1)
         btn[i]["command"]=lambda x=numbers[i]:added_value.enter_number(x)
         i+=1 
 
 # ****************************************************************************************************** #
 
-# Оформлення кнопок для основних функцій у калькуляторі
+# Оформлення кнопок для основних функцій у калькуляторі :
 
 btnClearEntry = Button(calc, text=chr(67)+chr(69), width=6, height=2, bg='#F0F0F0', activebackground='#B2AEB5', fg='black', font=('Helvetica', 20, 'bold'), bd=1, relief="groove", command=added_value.Clear_Entry)
-btnClearEntry.grid(row=1, column= 0, pady = 12)
-btnClearEntry.bind("<Enter>", button_hover)
-btnClearEntry.bind("<Leave>", button_hover_leave)
+btnClearEntry.grid(row=1, column= 0, pady = 12) #віджет розділений на число рядків і стовпців, а також присутній зовнішній відступ між віджетами
+btnClearEntry.bind("<Enter>", button_hover) #функція прив'язки використовується для обробки подій, подія "<Enter>" наступає тоді, коли вказівник миші увійшов у віджет
+btnClearEntry.bind("<Leave>", button_hover_leave) #подія "<Leave>" наступає тоді, коли вказівник миші залишає віджет
+
+# Для кожної кнопки :
 
 btnClearAll = Button(calc, text=chr(67), width=6, height=2, bg='#F0F0F0', activebackground='#B2AEB5',fg='black', font=('Helvetica', 20, 'bold'), bd=1, relief="groove", command=added_value.Clear_All_Entry)
 btnClearAll.grid(row=1, column= 1, pady = 1)
@@ -398,12 +402,12 @@ def Expanded():
 
 # ******************************************************************************************************************** #
 
-#Меню для калькулятора, в якому присутні три команди
+# Меню для калькулятора, в якому присутні три команди :
 
-menubar = Menu(calc)
+menubar = Menu(calc) #створюємо меню з викликом
 
-filemenu = Menu(menubar, tearoff = 0, activebackground="#DAA520")
-menubar.add_cascade(label = 'Файл', menu = filemenu)
+filemenu = Menu(menubar, tearoff = 0, activebackground="#DAA520") #панель меню може містити підменю, в нашому випадку меню файлів(filemenu)
+menubar.add_cascade(label = 'Файл', menu = filemenu) #створюємо каскад, який буде містити команди
 filemenu.add_command(label = "Основні функції", command = Standard)
 filemenu.add_command(label = "Додаткові функції", command = Expanded)
 filemenu.add_separator()
