@@ -16,7 +16,7 @@ root.geometry('482x568+450+90') #встановлює розміри вікна 
 
 root.resizable(height=False, width=False) #робить так, що користувач не може змінювати розміри вікна програми для кращого користувацького інтерфейсу, бо присутнє значення False; також можна використати (0,0)
 
-calc = Frame(root)
+calc = Frame(root) #calc є фреймом, існуючим всередині кореневого вікна; фрейми зазвичай використовуються в якості контейнера для груп інших віджетів
 calc.grid() #двовимірний табличний спосіб розміщення(кожна "комірка" в отриманій таблиці може містити віджет)
 
 # ****************************************************************************************************** #
@@ -131,8 +131,8 @@ def button_hover_leave16(smth):
 
 # Класи для всіх кнопок в калькуляторі
 
-class Calc():
-    def __init__(self): #належить до групи методів перевантаження операторів; конструктор об'єктів класу в ООП
+class Calc(): #клас полегшує роботу, тобто використання об'єкта дозволяє легко розділити код на модульні модулі, які є самодостатніми
+    def __init__(self): #належить до групи методів перевантаження операторів; конструктор об'єктів класу в ООП метод якого відповідає за ініціалізацію(приведення в стан готовності до використання) примірників класу після їх створення
         self.total=0
         self.current=''
         self.input_value=True
@@ -140,7 +140,7 @@ class Calc():
         self.op=''
         self.result=False
 
-    def enter_number(self, num):
+    def enter_number(self, num): #ввід чисел(цілих і з рухомою точкою)
         self.result=False
         firstnum=txtDisplay.get()
         secondnum=str(num)
@@ -152,9 +152,9 @@ class Calc():
                 if secondnum in firstnum:
                     return
             self.current = firstnum+secondnum
-        self.display(self.current)
+        self.display(self.current) #вивід на дисплей результуючого значення(self.current)
 
-    def overall_value(self): #вивід значення
+    def overall_value(self): #вивід значення, функціонування клавіши "=" в програмі
         self.result=True
         self.current=float(self.current)
         if self.check_sum==True:
@@ -162,11 +162,11 @@ class Calc():
         else:
             self.total=float(txtDisplay.get())
 
-    def display(self, value): #те, що буде показуватися після запуска калькулятора й після деякий операцій(коли буде використовуватися .display)
+    def display(self, value): #те, що буде показуватися після запуска калькулятора й після деяких операцій(коли буде використовуватися .display)
         txtDisplay.delete(0, END)
         txtDisplay.insert(0, value)
 
-    def valid_function(self):
+    def valid_function(self): #дійові операції: додавання, віднімання, множення, ділення і ділення за модулем
         if self.op == "add":
             self.total += self.current
         if self.op == "sub":
@@ -174,7 +174,7 @@ class Calc():
         if self.op == "multi":
             self.total *= self.current
         if self.op == "divide":
-            if self.current == 0:
+            if self.current == 0: #якщо операція супроводжується діленням на 0, то показує помилку(модуль tkinter.messagebox забезпечує базовий клас шаблону showerror)
                 tkinter.messagebox.showerror("Калькулятор", "Помилка!")
             else:
                 self.total /= self.current
@@ -205,13 +205,13 @@ class Calc():
             self.current = self.current[:-1]
             self.display(self.current)
     
-    def Clear_Entry(self):
+    def Clear_Entry(self): #очищення дисплея від введеного значення(попередні введені значення при цьому зберігаються через False в self.result та True в input_value
         self.result = False
         self.current = "0"
         self.display(0)
         self.input_value=True
     
-    def Clear_All_Entry(self):
+    def Clear_All_Entry(self): #очищення дисплея від усіх введених значень, бо self.total=0(але в дисплеї залишається число 0 для заміни результату попередніх операцій)
         self.Clear_Entry()
         self.total=0
 
