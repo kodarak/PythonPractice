@@ -155,3 +155,15 @@ tkinter.messagebox.showerror("Country statistics related to COVID-19", "Error! E
 ### Знадобився лише один комміт, хоча можна було розділити його на частини: в папку PythonPractice потрібно було створити папку task-4, в яку також створити й додати файл завдання Task-4; також потрібно було додати папку static для стікерів та відео з демонстрацією роботи бота(video.mkv)
 
 # Пояснення до мого проєкту (завдання Task-4)
+
+<br>***Функція виводу інформації, що по даній країні інформація недоступна, тобто:***
+<br>***Вона працює некоректно через те, що до цього було прописано loop if message.text == str(message.text), але помилки при вводі іншого повідомлення немає, бо str цьому допомагає***
+```python
+elif country not in data: #якщо country немає в data
+  if str(message.text) != country['Country']:
+    bot.send_message(message.chat.id, '<b>Error! Incorrect input!</b>', parse_mode='html')
+    sti6 = open('static/6.webp', 'rb')
+    bot.send_sticker(message.chat.id, sti6)
+```
+<br>***Її складно реалізувати через те, що в моєму коді розглядаються індекси країн та message.text == str(message.text); також json файл(у якому реалізований запит) не має масиву для списку країн (зручно було б, якщо він називався б "Countries")***<br>
+<br>***Поясненния також є в моєму коді (task-3.py), тобто коментарі.***
