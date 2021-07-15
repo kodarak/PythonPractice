@@ -1,9 +1,9 @@
 import http.client
 import json #модуль Python, який дозволяє кодувати і декодувати дані в зручному форматі
-import telebot
-import os
+import telebot #модуль Python, який дає просту, але розширену реалізацію Python для API Telegram Bot
+import os #модуль Python, який забезпечує функції взаємодії з поточною операційною системою; для взаємодії з файловою системою
 
-from telebot import types
+from telebot import types #функція з модуля telebot для клавіатури
 
 # ******************************************** #
 
@@ -28,7 +28,9 @@ with open('all.json', 'w') as file:
 # ******************************************** #
 
 TOKEN = '1844435394:AAGatsjr8KPCNRP_0Wcu-WS7KfWRQfmEhoQ' #токен бота з @BotFather
-bot = telebot.TeleBot(TOKEN)
+bot = telebot.TeleBot(TOKEN) #використання TOKEN для присвоєння його до bot для подальшого запуску
+
+# ******************************************** #
 
 # Статистика USA:
 
@@ -96,25 +98,28 @@ newrecovered6 = data[6]['NewRecovered']
 
 # ******************************************** #
 
-@bot.message_handler(commands=['start'])
-def welcome(message):
-    sti1 = open('static/1.webp', 'rb')
-    bot.send_sticker(message.chat.id, sti1)
+@bot.message_handler(commands=['start']) #декоратор, який відстежує тип введеного бота повідомлення('/start')
+
+# Функції, які будуть відповідати за обробку команди '/start'
+def welcome(message): 
+    sti1 = open('static/1.webp', 'rb') #відкриває файл(стікер) у двійковому форматі для читання
+    bot.send_sticker(message.chat.id, sti1) #надсилає стікер(метод send_sticker), тобто повідомлення буде містити чат ID для конкретного повідомлення; воно буде утримуватися під ключем message.chat.id
 
     # Клавіатура :
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    btn1 = types.KeyboardButton("🌐 Current statistics of 6 countries")
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #задає клавіатуру за допомогою функції types і методу ReplyKeyboardMarkup з варіантами відповіді(параметр для зміни розміру клавіатури вертикально для оптимального прилягання)
+    btn1 = types.KeyboardButton("🌐 Current statistics of 6 countries") #задає кнопку за допомогою функції types і методу KeyboardButton
     btn2 = types.KeyboardButton("↺ Reload")
     # btn3 = types.KeyboardButton("❔ Enter the country name")
-
-    markup.add(btn1)
+    
+    # Додає кнопки на клавіатуру :
+    markup.add(btn1) 
     markup.add(btn2)
     # markup.add(btn3)
 
     bot.send_message(message.chat.id, "Welcome, <strong>{0.first_name}</strong>!\nI am a <b>{1.first_name}</b> bot which is created for country statistics related to COVID-19.".format(message.from_user, bot.get_me()), parse_mode='html', reply_markup=markup)
 
 def get_txt(message):
-    txt = open("InfoFromVACCOVID.txt", "w")
+    txt = open("InfoFromVACCOVID.txt", "w") #створює текствоий файл
 
     text = ""
     text += f"\n\t***************************************"
@@ -130,27 +135,27 @@ def get_txt(message):
     text += f"\n\t***************************************"
     text += f"\n\t• TotalCases of Covid-19 in UK: {totalcases6}\n\t• NewCases of Covid-19 in UK: {newcases6}\n\t• TotalDeaths from Covid-19 in UK: {totaldeaths6}\n\t• NewDeaths from Covid-19 in UK: {newdeaths6}\n\t• TotalRecovered from Covid-19 in UK: {totalrecovered6}\n\t• NewRecovered from Covid-19 in UK: {newrecovered6}"
     text += f"\n\t***************************************"
-    txt.write(text)
-    txt.close()
+    txt.write(text) #записали дані в текстовий файл
+    txt.close() #після кожної операції над файлом бажано його закривати, щоб не було помилок
 
-    txt = open("InfoFromVACCOVID.txt", "r")
-    bot.send_document(message.message.chat.id, txt)
+    txt = open("InfoFromVACCOVID.txt", "r") #відкрити для читання
+    bot.send_document(message.message.chat.id, txt) #надсилає текстовий файл
 
-    # Ловимо виняток: PermissionError(13, 'Процесс не может получить доступ к файлу, так как этот файл занят другим процессом')
+    # Ловимо виняток(PermissionError(13, 'Процесс не может получить доступ к файлу, так как этот файл занят другим процессом')) :
     try:
-        if os.access("InfoFromVACCOVID.txt", os.R_OK and os.X_OK):
-            os.remove("InfoFromVACCOVID.txt")
-    except PermissionError:
-        pass
+        if os.access("InfoFromVACCOVID.txt", os.R_OK and os.X_OK): #метод access модуля os використовує реальний uid / gid (ідентифікатори) для тестування доступу до шляху (R_OK and X_OK значення, що передаються як параметр access(), щоб перевірити читабельність та виконуваності шляху відповідно)
+            os.remove("InfoFromVACCOVID.txt") #видаліть шлях до текстового файлу
+    except PermissionError: #процесс не может получить доступ к файлу, так как этот файл занят другим процессом
+        pass #конструкція except: pass по суті заглушає будь-які виняткові умови, що виникають під час виконання коду, описаного в блоці try:
 
-@bot.message_handler(content_types=['text'])
+@bot.message_handler(content_types=['text']) #декоратор, який відстежує тип введеного бота повідомлення('text'), який можна використовувати для кнопок та введеного значення в поле
 def buttons(message):
     if message.chat.type == 'private':
-        txtfile = types.InlineKeyboardMarkup()
-        btnget_textfile = types.InlineKeyboardButton("Get txtfile of the current statistics of 6 countries ✉", callback_data="for_txtfile")
-        txtfile.add(btnget_textfile)
+        txtfile = types.InlineKeyboardMarkup() #задає вбудовану клавіатуру за допомогою функції types і методу InlineKeyboardMarkup
+        btnget_textfile = types.InlineKeyboardButton("Get txtfile of the current statistics of 6 countries ✉", callback_data="for_txtfile") #задає вбудовану кнопку за допомогою функції types і методу InlineKeyboardButton
+        txtfile.add(btnget_textfile) #додає вбудовану кнопку на вбудовану клавіатуру
 
-        if message.text == '🌐 Current statistics of 6 countries':
+        if message.text == '🌐 Current statistics of 6 countries': #якщо введене повідомлення дорівнює тексту(у нашому випадку кнопці з текстом)
             sti2 = open('static/2.webp', 'rb')
             bot.send_sticker(message.chat.id, sti2)
 
@@ -201,7 +206,7 @@ def buttons(message):
             sti4 = open('static/4.webp', 'rb')
             bot.send_sticker(message.chat.id, sti4)
 
-        elif message.text == str(message.text):
+        elif message.text == str(message.text): #якщо введене повідомлення є текстом, тобто str(це потрібно для того, щоб можна було вводити назву країни для пошуку її статистики; також через те, що в нас використовується список й індекси, а тому str обов'язковий)
 
             # ******************************************** #
 
@@ -225,8 +230,8 @@ def buttons(message):
 
             # ******************************************** #
 
-            for country in data:
-                if str(message.text) == country['Country']:
+            for country in data: #метод loop, тобто для кожного входження country в data(список статистики)
+                if str(message.text) == country['Country']: #якщо наша послідовність символів з повідомлення дорівнює country з індексом-ключем 'Country'
 
                     searchcountry = message.text
 
@@ -262,7 +267,7 @@ def buttons(message):
                     sti5 = open('static/5.webp', 'rb')
                     bot.send_sticker(message.chat.id, sti5)
             
-                elif country not in data:
+                elif country not in data: #якщо country немає в data
                     if str(message.text) != country['Country']:
                         bot.send_message(message.chat.id, '<b>Error! Incorrect input!</b>', parse_mode='html')
                         sti6 = open('static/6.webp', 'rb')
@@ -276,7 +281,7 @@ def callback_inline(call):
                 get_txt(call)
                 bot.send_message(call.message.chat.id, '<b>Done!</b>', parse_mode='html')
 
-            #Видалити кнопки і текст :
+            #Видаляє кнопки і текст :
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🌐 Current statistics of 6 countries", reply_markup=None)
             bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="The txtfile of the current statistics of 6 countries ✉ was created!")
 
