@@ -273,7 +273,7 @@ def buttons(message):
                         sti6 = open('static/6.webp', 'rb')
                         bot.send_sticker(message.chat.id, sti6)
 
-@bot.callback_query_handler(func=lambda call: True)
+@bot.callback_query_handler(func=lambda call: True) #обробка натискання на кнопку вбудованої клавіатури
 def callback_inline(call):
     try:
         if call.message:
@@ -281,12 +281,13 @@ def callback_inline(call):
                 get_txt(call)
                 bot.send_message(call.message.chat.id, '<b>Done!</b>', parse_mode='html')
 
-            #Видаляє кнопки і текст :
+            # Видаляє вбудовану кнопку і показує текст :
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🌐 Current statistics of 6 countries", reply_markup=None)
+            # Показує повідомлення після натискання вбудованої кнопки :
             bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="The txtfile of the current statistics of 6 countries ✉ was created!")
 
-    except Exception as e:
-        print(repr(e))
+    except Exception as e: #приймає лише винятки, які призначено зловити
+        print(repr(e)) #якщо збираєтеся роздрукувати виняток
 
 # Запуск: 
 bot.polling(none_stop=True)
